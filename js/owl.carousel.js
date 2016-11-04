@@ -415,10 +415,7 @@
 		return event.data;
 	};
 
-	/**
-	 * Updates the view.
-	 * @public
-	 */
+	
 	Owl.prototype.update = function() {
 		var i = 0,
 			n = this._pipe.length,
