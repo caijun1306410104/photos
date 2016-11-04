@@ -1,26 +1,11 @@
-/* jquery.nicescroll
--- version 3.5.0 BETA5
--- copyright 2011-12-13 InuYaksa*2013
--- licensed under the MIT
---
--- http://areaaperta.com/nicescroll
--- https://github.com/inuyaksa/jquery.nicescroll
---
-*/
-
 (function(jQuery){
-
-  // globals
   var domfocus = false;
   var mousefocus = false;
   var zoomactive = false;
   var tabindexcounter = 5000;
   var ascrailcounter = 2000;
   var globalmaxzindex = 0;
-  
-  var $ = jQuery;  // sandbox
- 
-  // http://stackoverflow.com/questions/2161159/get-script-path
+  var $ = jQuery; 
   function getScriptPath() {
     var scripts=document.getElementsByTagName('script');
     var path=scripts[scripts.length-1].src.split('?')[0];
@@ -324,12 +309,10 @@
     this.canhwscroll = (cap.hastransform&&self.opt.hwacceleration);
     this.ishwscroll = (this.canhwscroll&&self.haswrapper);
     
-    this.istouchcapable = false;  // desktop devices with touch screen support
-    
-//## Check Chrome desktop with touch support
+    this.istouchcapable = false;  
     if (cap.cantouch&&cap.ischrome&&!cap.isios&&!cap.isandroid) {
       this.istouchcapable = true;
-      cap.cantouch = false;  // parse normal desktop events
+      cap.cantouch = false;  
     }    
 
 //## Firefox 18 nightly build (desktop) false positive (or desktop with touch support)

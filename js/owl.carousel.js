@@ -1,22 +1,6 @@
-/**
- * Owl carousel
- * @version 2.0.0
- * @author Bartosz Wojciechowski
- * @license The MIT License (MIT)
- * @todo Lazy Load Icon
- * @todo prevent animationend bubling
- * @todo itemsScaleUp
- * @todo Test Zepto
- * @todo stagePadding calculate wrong active classes
- */
 ;(function($, window, document, undefined) {
 
 	var drag, state, e;
-
-	/**
-	 * Template for status information about drag and touch events.
-	 * @private
-	 */
 	drag = {
 		start: 0,
 		startX: 0,
@@ -32,11 +16,6 @@
 		updatedX: 0,
 		targetEl: null
 	};
-
-	/**
-	 * Template for some status informations.
-	 * @private
-	 */
 	state = {
 		isTouch: false,
 		isScrolling: false,
@@ -44,11 +23,6 @@
 		direction: false,
 		inMotion: false
 	};
-
-	/**
-	 * Event functions references.
-	 * @private
-	 */
 	e = {
 		_onDragStart: null,
 		_onDragMove: null,
@@ -59,123 +33,59 @@
 		_goToLoop: null,
 		_checkVisibile: null
 	};
-
-	/**
-	 * Creates a carousel.
-	 * @class The Owl Carousel.
-	 * @public
-	 * @param {HTMLElement|jQuery} element - The element to create the carousel for.
-	 * @param {Object} [options] - The options
-	 */
 	function Owl(element, options) {
-
-		/**
-		 * Current settings for the carousel.
-		 * @public
-		 */
 		this.settings = null;
 
-		/**
-		 * Current options set by the caller including defaults.
-		 * @public
-		 */
+		
 		this.options = $.extend({}, Owl.Defaults, options);
 
-		/**
-		 * Plugin element.
-		 * @public
-		 */
+		
 		this.$element = $(element);
 
-		/**
-		 * Caches informations about drag and touch events.
-		 */
+		
 		this.drag = $.extend({}, drag);
 
-		/**
-		 * Caches some status informations.
-		 * @protected
-		 */
+		
 		this.state = $.extend({}, state);
 
-		/**
-		 * @protected
-		 * @todo Must be documented
-		 */
+		
 		this.e = $.extend({}, e);
 
-		/**
-		 * References to the running plugins of this carousel.
-		 * @protected
-		 */
+		
 		this._plugins = {};
 
-		/**
-		 * Currently suppressed events to prevent them from beeing retriggered.
-		 * @protected
-		 */
+		
 		this._supress = {};
 
-		/**
-		 * Absolute current position.
-		 * @protected
-		 */
+		
 		this._current = null;
 
-		/**
-		 * Animation speed in milliseconds.
-		 * @protected
-		 */
+		
 		this._speed = null;
 
-		/**
-		 * Coordinates of all items in pixel.
-		 * @todo The name of this member is missleading.
-		 * @protected
-		 */
+		
+		 
 		this._coordinates = [];
 
-		/**
-		 * Current breakpoint.
-		 * @todo Real media queries would be nice.
-		 * @protected
-		 */
+		
 		this._breakpoint = null;
 
-		/**
-		 * Current width of the plugin element.
-		 */
+		
 		this._width = null;
 
-		/**
-		 * All real items.
-		 * @protected
-		 */
+		
 		this._items = [];
 
-		/**
-		 * All cloned items.
-		 * @protected
-		 */
+		
 		this._clones = [];
 
-		/**
-		 * Merge values of all items.
-		 * @todo Maybe this could be part of a plugin.
-		 * @protected
-		 */
+		
 		this._mergers = [];
 
-		/**
-		 * Invalidated parts within the update process.
-		 * @protected
-		 */
+		
 		this._invalidated = {};
 
-		/**
-		 * Ordered list of workers for the update process.
-		 * @protected
-		 */
+		
 		this._pipe = [];
 
 		$.each(Owl.Plugins, $.proxy(function(key, plugin) {
@@ -194,10 +104,7 @@
 		this.initialize();
 	}
 
-	/**
-	 * Default options for the carousel.
-	 * @public
-	 */
+	
 	Owl.Defaults = {
 		items: 3,
 		loop: false,
@@ -235,7 +142,7 @@
 		itemElement: 'div',
 		stageElement: 'div',
 
-		// Classes and Names
+		
 		themeClass: 'owl-theme',
 		baseClass: 'owl-carousel',
 		itemClass: 'owl-item',
@@ -243,27 +150,17 @@
 		activeClass: 'active'
 	};
 
-	/**
-	 * Enumeration for width.
-	 * @public
-	 * @readonly
-	 * @enum {String}
-	 */
+	
 	Owl.Width = {
 		Default: 'default',
 		Inner: 'inner',
 		Outer: 'outer'
 	};
 
-	/**
-	 * Contains all registered plugins.
-	 * @public
-	 */
+	
 	Owl.Plugins = {};
 
-	/**
-	 * Update pipe.
-	 */
+	
 	Owl.Pipe = [ {
 		filter: [ 'width', 'items', 'settings' ],
 		run: function(cache) {
